@@ -1,28 +1,66 @@
 .App {
   text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+  background-color: rgb(255, 255, 255);
+  min-height: 100vh;
+  height: 100%;
+  width: 100vw;
+  font-family: 'Rock Salt', cursive;
 }
 
 .App-title {
-  font-size: 1.5em;
+  font-size: 200px;
+  background: url(abstract-art-artistic-990826.jpg) center;
+  background-position: 50% 40%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  animation: textAnimated 30s ease-in-out infinite;
 }
 
-.App-intro {
-  font-size: large;
+@keyframes textAnimated {
+  0% { background-position: 0% 40% }
+  50% { background-position: 100% 40% }
+  100% { background-position: 0% 40% }
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+@keyframes textScaled {
+  0% { transform: scale(1) }
+  50% { transform: scale(1.1) }
+  100% { transform: scale(1) }
+}
+
+header {
+  position: relative;
+  height: 100vh;
+}
+
+p {
+  font-family: Quicksand;
+  font-size: 30px;
+  position: absolute;
+  top: 65%;
+  left: 48.1%;
+  cursor: pointer;
+  animation: textScaled 2s ease-in-out infinite;
+}
+
+.o::before {
+  width: 250px;
+  content: '>';
+  position: absolute;
+  font-size: 250px;
+  transform: rotate(90deg);
+  top: 35%;
+  left: 42.5%;
+  background: url(abstract-art-artistic-990826.jpg) center;
+  background-position: 50% 40%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  /* animation: textAnimated 60s ease-in-out infinite; */
+  cursor: pointer;
+}
+
+h2, input {
+  margin: 150px auto 30px; 
 }
