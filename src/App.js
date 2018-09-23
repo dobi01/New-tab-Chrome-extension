@@ -1,20 +1,26 @@
 import React, { Component } from 'react';
+import Fullscreen from 'react-full-screen';
 import './App.css';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: ''
+      name: '',
+      isFull: false
     };
-    this.handleChange = this.handleChange.bind(this);
+    // this.handleChange = this.handleChange.bind(this);
     this.load = () => {
       this.state.name = localStorage.getItem('name');
     }
     if (localStorage.length) this.load();
   }
 
-  handleChange(e) {
+  goFull = () => {
+    this.setState({ isFull: true });
+  }
+
+  handleChange = (e) => {
     if (e.which == 13 || e.keyCode == 13) {
       let name = e.target.value;
       localStorage.setItem('name', name);
@@ -24,15 +30,23 @@ class App extends Component {
 
   render() {
     const welcome = <h2>Welcome, {this.state.name}</h2>,
-          enterName = <input type="text" placeholder="Enter your name" onKeyDown={this.handleChange}/>;
+          enterName = <input autoFocus className="input-name" type="text" placeholder="Enter your name" onKeyDown={this.handleChange}/>,
+          fullscreenNode = <div className="full-screenable-node">
+                            {this.state.name ? welcome : enterName}
+                          </div>;
     return (
       <div className="App">
         <header>
           <h1 className="App-title">Room 156</h1>
-          <div class="o">
+          <div className="o" onClick={this.goFull}>
             <p>enter</p>
           </div>
-          {/* {this.state.name ? welcome : enterName} */}
+          <Fullscreen
+            enabled={this.state.isFull}
+            onChange={isFull => this.setState({isFull})}
+          >
+            {this.state.isFull ? fullscreenNode : null}
+          </Fullscreen>
         </header>
       </div>
     );
