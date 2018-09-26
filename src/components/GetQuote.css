@@ -1,0 +1,17 @@
+.quote {
+  width: 100%;
+}
+
+.quote p {
+  position: static;
+}
+
+.quote p:first-of-type {
+  font-size: 25px;
+  font-family: Quicksand;
+  padding-bottom: 30px;
+}
+
+.quote p:last-of-type {
+  padding-bottom: 130px;
+}
