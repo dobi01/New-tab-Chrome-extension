@@ -16,7 +16,10 @@ class App extends Component {
       isQuoteButton: true,
       isWriteButton: true,
       text: '',
-      author: ''
+      author: '',
+      isInput: false,
+      isSubmitButton: false,
+      inputValue: ''
     };
     this.load = () => {
       this.state.name = localStorage.getItem('name');
@@ -28,7 +31,7 @@ class App extends Component {
     this.setState({ isFull: true });
   }
 
-  handleChange = (e) => {
+  handleChangeName = (e) => {
     if (e.which === 13 || e.keyCode === 13) {
       let name = e.target.value;
       localStorage.setItem('name', name);
@@ -48,17 +51,45 @@ class App extends Component {
     });
   }
 
+  handleWriteButton = () => {
+    this.setState({
+      isStart: false,
+      isQuoteButton: false,
+      isInput: true,
+      isSubmitButton: true
+    });
+  }
+
+  handleChangeNote = (e) => {
+    this.setState({
+      inputValue: e.target.value
+    });
+  }
+
+  handleSubmit = () => {
+    this.props.submitNote(this.state.inputValue);
+    this.setState({
+      inputValue: ''
+    });
+  }
+
   render() {
     const welcome = <h2>Welcome, {this.state.name}</h2>,
-          enterName = <input autoFocus className="input-name" type="text" placeholder="Enter your name" onKeyDown={this.handleChange}/>,
+          enterName = <input autoFocus className="input-name" type="text" placeholder="Enter your name" onKeyDown={this.handleChangeName}/>,
           quoteButton = <button onClick={this.handleQuoteButton}>Get quote</button>,
-          writeButton = <button>Start writing</button>,
+          writeButton = <button onClick={this.handleWriteButton}>Start writing</button>,
+          submitButton = <button onClick={this.handleSubmit}>Submit</button>,
+          writeInput = <input autoFocus type="text" maxLength="156" onChange={this.handleChangeNote} value={this.state.inputValue}/>,
+          list = this.props.notes.map((el, i) => <li key={i}>{el}</li>),
           fullscreenNode = <div className="full-screenable-node">
                             <div className="center">
                               {this.state.isStart ? (this.state.name ? welcome : enterName) : null}
-                              {this.state.isQuote ? <GetQuote text={this.state.text} author={this.state.author} /> : null}
-                              {this.state.isQuoteButton ? quoteButton : null}
-                              {this.state.isWriteButton ? writeButton : null}
+                              {this.state.isQuote && <GetQuote text={this.state.text} author={this.state.author} />}
+                              {this.state.isQuoteButton && quoteButton}
+                              {this.state.isWriteButton && writeButton}
+                              {this.state.isInput && writeInput}
+                              {this.state.isSubmitButton && submitButton}
+                              {list}
                             </div>
                           </div>;
     return (
